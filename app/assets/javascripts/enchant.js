@@ -2718,11 +2718,11 @@ enchant.Surface.load = function(src) {
     var image = new Image();
     var surface = Object.create(enchant.Surface.prototype, {
         context: { value: null },
-        _css: { value: 'url(' + src + ')' },
+        _css: { value: 'url(' + '/assets/' + src + ')' },
         _element: { value: image }
     });
     enchant.EventTarget.call(surface);
-    image.src = src;
+    image.src = '/assets/' + src;
     image.onerror = function() {
         throw new Error('Cannot load an asset: ' + image.src);
     };

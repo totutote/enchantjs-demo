@@ -23,6 +23,11 @@ window.onload = function () {
      */
     game = new Game(320, 320);
     game.fps = 24;
+
+
+    enemyflg = false;
+
+
     /**
      * Initialiation for variables containing the score,
      * and whether or not touch is occurring = whether or not bullets are being fired
@@ -39,7 +44,7 @@ window.onload = function () {
      * ここでは graphic.png のみを指定する。
      * ロードに時間がかかる場合プログレスバーが出現する。
      */
-    game.preload('/assets/graphic.png');
+    game.preload('graphic.png');
     /**
      * Functions after loading.
      * ロードされたときの関数
@@ -60,14 +65,17 @@ window.onload = function () {
             if(Math.random() * 1000 < game.frame / 20 * Math.sin(game.frame / 100) + game.frame / 20 + 50) {
                 var y = Math.random() * 320;
                 var omega = y < 160 ? 0.01 : -0.01;
-                var enemy = new Enemy(320, y, omega);
+		if(enemyflg == false) {
+                    var enemy = new Enemy(320, y, omega);
+		    // enemyflg = true;
+		}
                 enemy.key = game.frame;
                 enemies[game.frame] = enemy;
             }
-            //scoreLabel.score = game.score;
+            scoreLabel.score = game.score;
         });
-        // scoreLabel = new ScoreLabel(8, 8);
-        // game.rootScene.addChild(scoreLabel);
+        scoreLabel = new ScoreLabel(8, 8);
+        game.rootScene.addChild(scoreLabel);
     };
     game.start();
 };
@@ -120,7 +128,7 @@ var Player = enchant.Class.create(enchant.Sprite, {
          * Game#preload で指定されたファイルは、Game.assets のプロパティとして格納される。
          * Sprite.image にこれらを代入することで、画像を表示することができる
          */
-        this.image = game.assets['/assets/graphic.png'];
+        this.image = game.assets['graphic.png'];
         /**
          * Entity.x, Entity.y {Number}
          * Drawing coordinates. Sets (x, y) coordinates with top left as standard.
@@ -245,7 +253,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
          * Playerクラスと同じく 大きさ 16x16 のSpriteをベースとして拡張していく。
          */
         enchant.Sprite.call(this, 16, 16);
-        this.image = game.assets['/assets/graphic.png'];
+        this.image = game.assets['graphic.png'];
         this.x = x;
         this.y = y;
 
@@ -312,7 +320,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
          */
         this.direction += this.omega;
         this.x -= this.moveSpeed * Math.cos(this.direction / 180 * Math.PI);
-        this.y += this.moveSpeed * Math.sin(this.direction / 180 * Math.PI)
+        this.y += this.moveSpeed * Math.sin(this.direction / 180 * Math.PI);
     },
     remove: function () {
         /**
@@ -337,7 +345,7 @@ var Enemy = enchant.Class.create(enchant.Sprite, {
 var Shoot = enchant.Class.create(enchant.Sprite, {
     initialize: function (x, y, direction) {
         enchant.Sprite.call(this, 16, 16);
-        this.image = game.assets['/assets/graphic.png'];
+        this.image = game.assets['graphic.png'];
         this.x = x;
         this.y = y;
         this.frame = 1;
