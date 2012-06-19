@@ -4,4 +4,7 @@ class PreviewController < ApplicationController
 
   def shooting
   end
+
+  def practice
+  end
 end
