@@ -7,4 +7,7 @@ class PreviewController < ApplicationController
 
   def practice
   end
+
+  def shooting_coffee
+  end
 end
